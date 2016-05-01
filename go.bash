@@ -1,10 +1,10 @@
 #!/bin/bash
 set -e
 set -u
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+mkdir -p ${DIR}/logs
 
-mkdir -p logs
-
-python product_listing.py -p products.txt -l listings.txt > go_result
+python ${DIR}/product_listing.py -p products.txt -l listings.txt > go_result
 
 result_file=`cat go_result`
 
