@@ -11,6 +11,10 @@ Step 2
 ./go.bash
 
 Step 3
-Check the filename in result_go
+Check the filename in result_go file created in the folder ~/github/record_linkage
+
+Note:
+Result file is also placed in the folder ~/github/record_linkage on executing the program
+result_go is also placed in the same location
 
 
