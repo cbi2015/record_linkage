@@ -76,6 +76,7 @@ class Product(object):
         self.product_name = product_dict['product_name']
         self.manufacturer = product_dict['manufacturer']
         self.model = product_dict['model']
+        # optional data so we use .get function as None is stored, if data is not present
         self.family = product_dict.get('family')
         # 2010-01-06T19:00:00.000-05:00
         self.announced_date = product_dict['announced-date']
@@ -108,11 +109,16 @@ def process_input_files(inut_file_name, input_type):
                     result[result_data["manufacturer"]] = Product(result_data)
                 else:
                     result[result_data["manufacturer"]].append(Listing(result_data))
-                log_message("{0}: line {1} processed sucessfully".format(inut_file_name, str(counter)), logging.INFO)
+                log_message(
+                                "{0}: line {1} processed sucessfully".format(inut_file_name, str(counter)),
+                                logging.INFO
+                            )
             except:
                 frame = inspect.currentframe()
-                log_message("{0}: processing of line {1} failed".format(inut_file_name, str(counter)),
-                            logging.ERROR, frame)
+                log_message(
+                                "{0}: processing of line {1} failed".format(inut_file_name, str(counter)),
+                                logging.ERROR, frame
+                            )
     return result
 
 
@@ -120,6 +126,7 @@ def map_products_list(product_map, listing_map):
     product_listings = defaultdict(lambda: [])
     for data in listing_map:
         if data in product_map:
+            # extend is faster than append if we want to attach list of elements to a existing list
             product_listings[product_map[data].get_product_name()].extend(listing_map[data])
     return product_listings
 
@@ -136,7 +143,14 @@ def writeToFile(result_map):
         for data in result_map:
             try:
                 listings = [d for d in result_map[data]]
-                result_text = simplejson.dumps({"product_name": data, "listings": listings}, default=lambda o: o.__dict__, ensure_ascii=False)
+                result_text = simplejson.dumps(
+                                                {
+                                                    "product_name": data,
+                                                    "listings": listings
+                                                },
+                                                default=lambda o: o.__dict__,
+                                                ensure_ascii=False
+                                              )
                 result_file.write(result_text.encode('utf-8') + '\n')
             except:
                 frame = inspect.currentframe()
