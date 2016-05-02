@@ -14,7 +14,6 @@ Step 3
 Check the filename in result_go file created in the folder ~/github/record_linkage
 
 Note:
-Result file is also placed in the folder ~/github/record_linkage on executing the program
-result_go is also placed in the same location
+Result file and result_go are placed in the folder ~/github/record_linkage on executing the program
 
 
